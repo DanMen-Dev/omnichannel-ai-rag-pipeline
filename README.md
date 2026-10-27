@@ -34,7 +34,35 @@ Migrated the entire ecosystem from asynchronous automation models (Make/ManyChat
 
 ### 1. Docker Compose Infrastructure (`docker-compose.yml`)
 ```
+### 1. Docker Compose Infrastructure (`docker-compose.yml`)
+n8n runs as a single container with a persistent volume. Public traffic reaches it only through HTTPS (Cloudflare DNS → Nginx Proxy Manager → n8n webhook).
 
+```yaml
+version: '3.8'
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=SUBDOMAIN.{DOMAIN}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://SUBDOMAIN.{DOMAIN}/
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
+```
+
+Start the stack:
+```bash
+docker compose up -d
+```
 ```
 
 ### 2. Data Ingestion Pipeline
