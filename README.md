@@ -33,8 +33,6 @@ Migrated the entire ecosystem from asynchronous automation models (Make/ManyChat
 - Active API keys for OpenAI and Pinecone.
 
 ### 1. Docker Compose Infrastructure (`docker-compose.yml`)
-```
-### 1. Docker Compose Infrastructure (`docker-compose.yml`)
 n8n runs as a single container with a persistent volume. Public traffic reaches it only through HTTPS (Cloudflare DNS → Nginx Proxy Manager → n8n webhook).
 
 ```yaml
@@ -62,7 +60,6 @@ volumes:
 Start the stack:
 ```bash
 docker compose up -d
-```
 ```
 
 ### 2. Data Ingestion Pipeline
